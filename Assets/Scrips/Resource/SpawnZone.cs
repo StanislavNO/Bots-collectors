@@ -22,7 +22,6 @@ namespace Assets.Scrips
             do
             {
                 transform.position = CreateNewPosition();
-
             }
             while (CheckCollisions());
 
@@ -34,7 +33,7 @@ namespace Assets.Scrips
             Vector3 result;
 
             result = new Vector3(
-                Random.Range(Vector3.zero.x,_map.Size.x),
+                Random.Range(Vector3.zero.x, _map.Size.x),
                 transform.position.y,
                 Random.Range(Vector3.zero.z, _map.Size.z));
 

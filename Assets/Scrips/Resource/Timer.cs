@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 namespace Assets.Scrips
 {
-    public class ResourceTimer : MonoBehaviour
+    public class Timer : MonoBehaviour
     {
         [SerializeField] private UnityEvent _timeHasCom;
         [SerializeField] private int _delay;
