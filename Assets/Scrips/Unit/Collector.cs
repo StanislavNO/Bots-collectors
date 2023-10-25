@@ -7,6 +7,7 @@ namespace Assets.Scrips
     {
         [SerializeField] Transform resource;
         [SerializeField] TargetMover target;
+
         private void Start()
         {
             target.SetTarget(resource);
