@@ -43,7 +43,7 @@ namespace Assets.Scrips
         private bool CheckCollisions()
         {
             Collider[] colliders;
-            Vector3 scanArea = new Vector3(1, 0.5f, 1);
+            Vector3 scanArea = new(1, 0.5f, 1);
 
             colliders = Physics.OverlapBox(
                     transform.position,

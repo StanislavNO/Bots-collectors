@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using UnityEngine.Events;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scrips
@@ -6,21 +8,31 @@ namespace Assets.Scrips
     [RequireComponent(typeof(Collider))]
     public class UnitParking : MonoBehaviour
     {
-        public int Unit { get; private set; }
+        [SerializeField] private UnityEvent CollectorArrived;
+
+        private Stack<Collector>  collectors = new();
+
+        public int NumberUnits => collectors.Count;
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out Collector collector))
             {
-                Unit++;
+                collectors.Push(collector);
+                //collector.GetComponent<Mover>().FinishWorking();
             }
         }
 
-        private void OnTriggerExit(Collider other)
+        public void SendingUnit(Transform resource)
         {
-            if (other.TryGetComponent(out Collector collector))
+            int minUnits = 0;
+
+            if (collectors.Count > minUnits)
             {
-                Unit--;
+                var collector = collectors.Pop();
+
+                collector.SetTarget(resource);
+                //collector.GetComponent<Mover>().SetTarget(resource);
             }
         }
     }

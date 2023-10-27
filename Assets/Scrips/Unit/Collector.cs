@@ -3,22 +3,29 @@ using UnityEngine;
 
 namespace Assets.Scrips
 {
+    [RequireComponent(typeof(Mover))]
     public class Collector : MonoBehaviour
     {
-        [SerializeField] Transform resource;
-        [SerializeField] Mover target;
+        [SerializeField] Mover _mover;
+        [SerializeField] Inventory _inventory;
 
-        public bool IsWorking;
-
-        private void Start()
+        public void SetTarget(Transform resource)
         {
-            target.SetTarget(resource);
-            IsWorking = true;
+            _inventory.SetTargetResource(resource);
+            _mover.SetTarget(resource);
         }
 
+        private void OnTriggerEnter(Collider collider)
+        {
+            if(collider.TryGetComponent(out UnitParking parking))
+            {
+                _mover.FinishWorking();
+            }
+        }
 
-        //dfhddddddddddddddddddd
-
-        
+        //public void GoToBase()
+        //{
+        //    _mover.ComeBack();
+        //}
     }
 }

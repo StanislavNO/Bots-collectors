@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 namespace Assets.Scrips
@@ -12,10 +11,11 @@ namespace Assets.Scrips
 
         private bool _isWorking;
         private Transform _resource;
+        private Transform _targetResource;
 
         private void Update()
         {
-            if( _isWorking && _resource != null)
+            if (_isWorking && _resource != null)
             {
                 _resource.position = transform.position + Vector3.forward * distance;
             }
@@ -27,12 +27,24 @@ namespace Assets.Scrips
 
         private void OnTriggerEnter(Collider other)
         {
-            if(other.TryGetComponent(out Resource resource))
+            if (other.TryGetComponent(out Resource resource))
             {
-                _resource = resource.transform;
-                _isWorking = true;
-                _resourcePickedUp.Invoke();
+                //Debug.Log(resource.IsAssembled);
+                if (resource.transform == _targetResource)
+                {
+                    Debug.Log("asd");
+                    resource.CollectResource();
+
+                    _resource = resource.transform;
+                    _isWorking = true;
+                    _resourcePickedUp.Invoke();
+                }
             }
+        }
+
+        public void SetTargetResource(Transform resource)
+        {
+            _targetResource = resource;
         }
     }
 }

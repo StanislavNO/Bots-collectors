@@ -1,22 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Assets.Scrips
 {
     public class Mover : MonoBehaviour
     {
         [SerializeField] private float _speed;
-        [SerializeField] private Transform _pathExit;
-        [SerializeField] private Transform _pathEntry;
 
+        private Vector3 _startPosition;
         private List<Transform> _exitPoints;
         private List<Transform> _entryPoints;
 
         private Transform _target;
+        private int _startCurrentPoint = 0;
         private int _currentPoint;
 
         private bool _isWorking;
@@ -24,46 +20,95 @@ namespace Assets.Scrips
         private void Awake()
         {
             _isWorking = false;
+        }
 
-            _exitPoints = GetWaypoints(_pathExit);
-            _entryPoints = GetWaypoints(_pathEntry);
+        private void Start()
+        {
+            _startPosition = transform.position;
         }
 
         private void Update()
         {
             if (_target != null)
             {
+                //Debug.Log("туда");
                 _isWorking = true;
                 Move(_exitPoints);
+                //Debug.Log(_exitPoints.Count);
+
             }
 
-            if (_target == null && _isWorking)
+            if (_target == null && _isWorking == true)
             {
+                //Debug.Log("обратно");
+                //Debug.Log(_target == null);
+                //Debug.Log(_isWorking);
+
                 Move(_entryPoints);
             }
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent(out Warehouse _))
+            {
+                transform.position = _startPosition;
+                _currentPoint = _startCurrentPoint;
+            }
+        }
+
+        public void Init(Transform pathExit, Transform pathEntry)
+        {
+            //Debug.Log("init");
+
+            _exitPoints = GetWaypoints(pathExit);
+            _entryPoints = GetWaypoints(pathEntry);
+        }
+
         public void SetTarget(Transform position)
         {
+            //Debug.Log("settarget");
             _target = position;
             _exitPoints.Add(_target);
         }
 
         public void ComeBack()
         {
-            _exitPoints.RemoveAt(_exitPoints.IndexOf(_target));
-            _currentPoint = 0;
+            //Debug.Log("combek");
+
+            _exitPoints.Remove(_target);
+            //Debug.Log(_exitPoints.Count + "remove");
+
+            _currentPoint = _startCurrentPoint;
             _target = null;
         }
 
+        public void FinishWorking()
+        {
+            _isWorking = false;
+            //Debug.Log(_isWorking);
+        }
+
+        //public void GoToParking()
+        //{
+        //    transform.position = _startPosition;
+        //    _currentPoint = _startCurrentPoint;
+        //}
+
         private void Move(List<Transform> path)
         {
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                path[_currentPoint].position,
-                _speed * Time.deltaTime);
+            //Debug.Log("move");
 
-            transform.LookAt(path[_currentPoint]);
+            if (_currentPoint < path.Count)
+            {
+                //Debug.Log(_currentPoint);
+                transform.position = Vector3.MoveTowards(
+                    transform.position,
+                    path[_currentPoint].position,
+                    _speed * Time.deltaTime);
+
+                transform.LookAt(path[_currentPoint]);
+            }
 
             if (transform.position == path[_currentPoint].position &&
                 _currentPoint < path.Count - 1)
@@ -72,6 +117,8 @@ namespace Assets.Scrips
 
         private List<Transform> GetWaypoints(Transform path)
         {
+            //Debug.Log("getwaypoints");
+
             List<Transform> result = new();
 
             for (int i = 0; i < path.childCount; i++)

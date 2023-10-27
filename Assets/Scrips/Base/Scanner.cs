@@ -7,27 +7,28 @@ namespace Assets.Scrips
 {
     public class Scanner : MonoBehaviour
     {
-        [SerializeField] private UnityEvent<List<Transform>> _scanWasCompleted;
+        private const string TagResource = "Resource";
 
-        private GameObject[] _resources;
+        private List<Transform> _resources = new();
 
-        public void ScanPositionResources()
+        public List<Transform> ScanPositionResources()
         {
-            List<Transform> result = new List<Transform>();
-
             FindResources();
 
-            foreach(var resource in _resources)
-            {
-                result.Add(resource.transform);
-            }
-
-            _scanWasCompleted.Invoke(result);
+            return _resources;
         }
 
         private void FindResources()
         {
-            _resources = GameObject.FindGameObjectsWithTag("Resource");
+            var resources = GameObject.FindGameObjectsWithTag(TagResource);
+
+            foreach(var resource in resources)
+            {
+                if (resource.GetComponent<Resource>().IsAssembled == false)
+                {
+                    _resources.Add(resource.transform);
+                }
+            }
         }
     }
 }

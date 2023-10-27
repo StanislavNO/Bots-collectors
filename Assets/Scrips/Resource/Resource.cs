@@ -1,21 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scrips
 {
     public class Resource : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        private bool _isAssembled = false;
+
+        public bool IsAssembled => _isAssembled; 
+
+        public void CollectResource()
         {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            _isAssembled = true;
+            Debug.Log(IsAssembled);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Assets.Scrips
 {
     public class Warehouse : MonoBehaviour
     {
-        [SerializeField] private UnityEvent _resourceDelivered;
+        //[SerializeField] private UnityEvent _resourceDelivered;
 
         public int Resource { get; private set; }
 
@@ -15,7 +15,7 @@ namespace Assets.Scrips
         {
             if (other.TryGetComponent(out Resource resource))
             {
-                _resourceDelivered.Invoke();
+                //_resourceDelivered.Invoke();
 
                 AddResource();
                 Destroy(resource.gameObject);
