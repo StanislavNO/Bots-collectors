@@ -6,11 +6,19 @@ namespace Assets.Scrips
     public class Collector : MonoBehaviour
     {
         [SerializeField] Transform resource;
-        [SerializeField] TargetMover target;
+        [SerializeField] Mover target;
+
+        public bool IsWorking;
 
         private void Start()
         {
             target.SetTarget(resource);
+            IsWorking = true;
         }
+
+
+        //dfhddddddddddddddddddd
+
+        
     }
 }
