@@ -1,39 +1,47 @@
-﻿using System.Collections;
-using UnityEngine.Events;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Assets.Scrips
 {
     [RequireComponent(typeof(Collider))]
     public class UnitParking : MonoBehaviour
     {
-        [SerializeField] private UnityEvent CollectorArrived;
+        private List<Collector> _collectors = new();
 
-        private Stack<Collector>  collectors = new();
+        public int NumberUnits => _collectors.Count();
+        public int ParkedUnits => GetParkedUnits();
 
-        public int NumberUnits => collectors.Count;
-
-        private void OnTriggerEnter(Collider other)
+        public void AddUnit(Collector unit)
         {
-            if (other.TryGetComponent(out Collector collector))
+            _collectors.Add(unit);
+        }
+
+        public void SendingUnit(Resource resource)
+        {
+            foreach(var collector in _collectors)
             {
-                collectors.Push(collector);
-                //collector.GetComponent<Mover>().FinishWorking();
+                if (collector.GetComponent<TargetMover>().IsWorking == false)
+                {
+                    collector.SetTarget(resource);
+                    return;
+                }
             }
         }
 
-        public void SendingUnit(Transform resource)
+        private int GetParkedUnits()
         {
-            int minUnits = 0;
+            int result = 0;
 
-            if (collectors.Count > minUnits)
+            foreach (Collector collector in _collectors)
             {
-                var collector = collectors.Pop();
-
-                collector.SetTarget(resource);
-                //collector.GetComponent<Mover>().SetTarget(resource);
+                if(collector.GetComponent<TargetMover>().IsWorking == false)
+                {
+                    result++;
+                }
             }
+
+            return result;
         }
     }
 }

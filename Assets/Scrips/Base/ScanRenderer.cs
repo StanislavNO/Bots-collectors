@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scrips
 {
     public class ScanRenderer : MonoBehaviour
     {
-
     }
 }

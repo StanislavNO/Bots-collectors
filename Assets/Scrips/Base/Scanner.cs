@@ -1,34 +1,33 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Assets.Scrips
 {
     public class Scanner : MonoBehaviour
     {
-        private const string TagResource = "Resource";
+        private List<Resource> _resources = new();
 
-        private List<Transform> _resources = new();
-
-        public List<Transform> ScanPositionResources()
+        public List<Resource> ScanPositionResources()
         {
-            FindResources();
-
-            return _resources;
+            return GetInactiveResources();
         }
 
-        private void FindResources()
+        public void AddRes(Resource resource)
         {
-            var resources = GameObject.FindGameObjectsWithTag(TagResource);
+            _resources.Add(resource);
+        }
 
-            foreach(var resource in resources)
+        private List<Resource> GetInactiveResources()
+        {
+            List<Resource> inactiveResources = new();
+
+            foreach (Resource resource in _resources)
             {
-                if (resource.GetComponent<Resource>().IsAssembled == false)
-                {
-                    _resources.Add(resource.transform);
-                }
+                if(resource.IsActive == false)
+                    inactiveResources.Add(resource);
             }
+
+            return inactiveResources;
         }
     }
 }

@@ -1,50 +1,42 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
 namespace Assets.Scrips
 {
     [RequireComponent(typeof(Collider))]
     public class Inventory : MonoBehaviour
     {
-        [SerializeField] private UnityEvent _resourcePickedUp;
         [SerializeField] private int distance;
 
+        private Resource _targetResource;
         private bool _isWorking;
-        private Transform _resource;
-        private Transform _targetResource;
+
+        public bool IsWorking => _isWorking;
 
         private void Update()
         {
-            if (_isWorking && _resource != null)
+            if (_isWorking && _targetResource.IsAssembled == false)
             {
-                _resource.position = transform.position + Vector3.forward * distance;
+                TakeResource();
             }
-            else if (_isWorking && _resource == null)
+            else if (_isWorking && _targetResource.IsAssembled == true)
             {
                 _isWorking = false;
             }
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.TryGetComponent(out Resource resource))
-            {
-                //Debug.Log(resource.IsAssembled);
-                if (resource.transform == _targetResource)
-                {
-                    Debug.Log("asd");
-                    resource.CollectResource();
-
-                    _resource = resource.transform;
-                    _isWorking = true;
-                    _resourcePickedUp.Invoke();
-                }
-            }
-        }
-
-        public void SetTargetResource(Transform resource)
+        public void SetTarget(Resource resource)
         {
             _targetResource = resource;
+        }
+
+        public void Working()
+        {
+            _isWorking = true;
+        }
+
+        private void TakeResource()
+        {
+            _targetResource.transform.position = transform.position + Vector3.forward * distance;
         }
     }
 }

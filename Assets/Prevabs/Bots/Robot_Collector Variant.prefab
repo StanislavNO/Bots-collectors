@@ -209,21 +209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cfea969c7e9196488045e3756bfa239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _resourcePickedUp:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 931026654}
-        m_TargetAssemblyTypeName: Assets.Scrips.Mover, Assembly-CSharp
-        m_MethodName: ComeBack
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   distance: 5
 --- !u!114 &931026654
 MonoBehaviour:
@@ -237,7 +222,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28ff2acbb81574945b47033e3e6955db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 40
+  _targetAchieved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8156243}
+        m_TargetAssemblyTypeName: Assets.Scrips.Inventory, Assembly-CSharp
+        m_MethodName: Working
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _speed: 20
 --- !u!114 &931026655
 MonoBehaviour:
   m_ObjectHideFlags: 0

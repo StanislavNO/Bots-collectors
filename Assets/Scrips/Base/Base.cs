@@ -9,21 +9,42 @@ namespace Assets.Scrips
         [SerializeField] private Scanner _scanner;
         [SerializeField] private UnitParking _unitParking;
 
-        private Stack<Transform> _resources = new();
+        private List<Resource> _resources = new();
 
         public int ResourcesFound => _resources.Count;
-        
-        private void Update()
+
+        private void FixedUpdate()
         {
-            if (_resources.Count > 0 && _unitParking.NumberUnits > 0)
-            {
-                _unitParking.SendingUnit(_resources.Pop());
-            }
+            if (_resources.Count > 0 && _unitParking.ParkedUnits > 0)
+                StartCoroutine(EnableСollector());
         }
 
-        public void ScanningMap()
+        public void ScanningMap() =>
+            _resources = _scanner.ScanPositionResources();
+
+        private bool TryGetInactiveResource(out Resource result)
         {
-            _resources = new(_scanner.ScanPositionResources());
+            foreach (Resource resource in _resources)
+            {
+                if (resource.IsActive == false && resource.IsAssembled == false)
+                {
+                    result = resource;
+                    return true;
+                }
+            }
+
+            result = null;
+            return false;
+        }
+
+        private IEnumerator EnableСollector()
+        {
+            WaitForSecondsRealtime delay = new(1);
+
+            if (TryGetInactiveResource(out Resource resource))
+                _unitParking.SendingUnit(resource);
+
+            yield return delay;
         }
     }
 }

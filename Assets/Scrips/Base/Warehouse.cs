@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Data;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 
 namespace Assets.Scrips
 {
     public class Warehouse : MonoBehaviour
     {
-        //[SerializeField] private UnityEvent _resourceDelivered;
+        [SerializeField] private Transform _storageBox;
 
         public int Resource { get; private set; }
 
@@ -15,10 +12,8 @@ namespace Assets.Scrips
         {
             if (other.TryGetComponent(out Resource resource))
             {
-                //_resourceDelivered.Invoke();
-
                 AddResource();
-                Destroy(resource.gameObject);
+                CollectResource(resource);
             }
         }
 
@@ -31,5 +26,11 @@ namespace Assets.Scrips
         }
 
         private void AddResource() => Resource++;
+
+        private void CollectResource(Resource resource)
+        {
+            resource.CollectResource();
+            resource.transform.position = _storageBox.position;
+        }
     }
 }
