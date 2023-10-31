@@ -7,6 +7,8 @@ namespace Assets.Scrips
     {
         private List<Resource> _resources = new();
 
+        public int Resources => _resources.Count;
+
         public List<Resource> ScanPositionResources() =>
             GetResourcesNotFound();
 
