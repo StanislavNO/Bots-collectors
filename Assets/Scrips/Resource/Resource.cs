@@ -5,19 +5,15 @@ namespace Assets.Scrips
     public class Resource : MonoBehaviour
     {
         private bool _isAssembled = false;
-        private bool _isActive = false;
+        private bool _isFound = false;
 
         public bool IsAssembled => _isAssembled;
-        public bool IsActive => _isActive;
+        public bool IsFound => _isFound;
 
-        public void CollectResource()
-        {
+        public void CollectResource() =>
             _isAssembled = true;
-        }
 
-        public void ActivateResource()
-        {
-            _isActive = true;
-        }
+        public void ActivateResource() =>
+            _isFound = true;
     }
 }

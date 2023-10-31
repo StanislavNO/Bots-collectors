@@ -1814,7 +1814,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 704587285}
         m_TargetAssemblyTypeName: Assets.Scrips.Scanner, Assembly-CSharp
-        m_MethodName: AddRes
+        m_MethodName: AddResource
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -7,27 +7,23 @@ namespace Assets.Scrips
     {
         private List<Resource> _resources = new();
 
-        public List<Resource> ScanPositionResources()
-        {
-            return GetInactiveResources();
-        }
+        public List<Resource> ScanPositionResources() =>
+            GetResourcesNotFound();
 
-        public void AddRes(Resource resource)
-        {
+        public void AddResource(Resource resource) =>
             _resources.Add(resource);
-        }
 
-        private List<Resource> GetInactiveResources()
+        private List<Resource> GetResourcesNotFound()
         {
-            List<Resource> inactiveResources = new();
+            List<Resource> resourcesNotFound = new();
 
             foreach (Resource resource in _resources)
             {
-                if(resource.IsActive == false)
-                    inactiveResources.Add(resource);
+                if (resource.IsFound == false)
+                    resourcesNotFound.Add(resource);
             }
 
-            return inactiveResources;
+            return resourcesNotFound;
         }
     }
 }

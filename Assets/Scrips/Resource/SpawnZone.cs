@@ -42,14 +42,14 @@ namespace Assets.Scrips
 
         private bool CheckCollisions()
         {
-            Collider[] colliders;
+            int minColliders = 0;
             Vector3 scanArea = new(1, 0.5f, 1);
 
-            colliders = Physics.OverlapBox(
+            Collider[] colliders = Physics.OverlapBox(
                     transform.position,
                     scanArea);
 
-            return colliders.Length > 0;
+            return colliders.Length > minColliders;
         }
     }
 }

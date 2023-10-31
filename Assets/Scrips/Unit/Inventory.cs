@@ -5,7 +5,7 @@ namespace Assets.Scrips
     [RequireComponent(typeof(Collider))]
     public class Inventory : MonoBehaviour
     {
-        [SerializeField] private int distance;
+        [SerializeField] private int _distance;
 
         private Resource _targetResource;
         private bool _isWorking;
@@ -36,7 +36,7 @@ namespace Assets.Scrips
 
         private void TakeResource()
         {
-            _targetResource.transform.position = transform.position + Vector3.forward * distance;
+            _targetResource.transform.position = transform.position + Vector3.forward * _distance;
         }
     }
 }

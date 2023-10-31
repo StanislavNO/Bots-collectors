@@ -10,13 +10,14 @@ namespace Assets.Scrips
         [SerializeField] private UnitParking _unitParking;
 
         private List<Resource> _resources = new();
+        private float _turnOnTime = 1;
 
         public int ResourcesFound => _resources.Count;
 
         private void FixedUpdate()
         {
             if (_resources.Count > 0 && _unitParking.ParkedUnits > 0)
-                StartCoroutine(EnableСollector());
+                StartCoroutine(EnableCollector());
         }
 
         public void ScanningMap() =>
@@ -26,7 +27,7 @@ namespace Assets.Scrips
         {
             foreach (Resource resource in _resources)
             {
-                if (resource.IsActive == false && resource.IsAssembled == false)
+                if (resource.IsFound == false && resource.IsAssembled == false)
                 {
                     result = resource;
                     return true;
@@ -37,9 +38,9 @@ namespace Assets.Scrips
             return false;
         }
 
-        private IEnumerator EnableСollector()
+        private IEnumerator EnableCollector()
         {
-            WaitForSecondsRealtime delay = new(1);
+            WaitForSecondsRealtime delay = new(_turnOnTime);
 
             if (TryGetInactiveResource(out Resource resource))
                 _unitParking.SendingUnit(resource);

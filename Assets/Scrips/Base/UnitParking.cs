@@ -21,7 +21,7 @@ namespace Assets.Scrips
         {
             foreach(var collector in _collectors)
             {
-                if (collector.GetComponent<TargetMover>().IsWorking == false)
+                if (collector.IsWorking == false)
                 {
                     collector.SetTarget(resource);
                     return;
@@ -35,7 +35,7 @@ namespace Assets.Scrips
 
             foreach (Collector collector in _collectors)
             {
-                if(collector.GetComponent<TargetMover>().IsWorking == false)
+                if (collector.IsWorking == false)
                 {
                     result++;
                 }

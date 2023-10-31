@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scrips
 {
@@ -8,6 +7,8 @@ namespace Assets.Scrips
     {
         [SerializeField] TargetMover _mover;
         [SerializeField] Inventory _inventory;
+
+        public bool IsWorking => _mover.IsWorking; 
 
         public void SetTarget(Resource resource)
         {

@@ -17,6 +17,8 @@ namespace Assets.Scrips
             }
         }
 
+        private void AddResource() => Resource++;
+
         public void DeleteResource(int value)
         {
             int minResource = 0;
@@ -24,8 +26,6 @@ namespace Assets.Scrips
             if (Resource > minResource)
                 Resource -= value;
         }
-
-        private void AddResource() => Resource++;
 
         private void CollectResource(Resource resource)
         {
